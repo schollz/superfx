@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
-	mathr "math/rand"
 	"os"
 	"os/exec"
 	"path"
@@ -91,7 +90,7 @@ func init() {
 	}
 }
 
-func scPath(f string) string {
+func SCPath(f string) string {
 	fabs, _ := filepath.Abs(f)
 	fabs = filepath.FromSlash(fabs)
 	fabs = strings.Replace(fabs, `\`, `\\`, -1)
@@ -112,13 +111,13 @@ func Effect(fname string, effect string, fs ...float64) (fname2 string, err erro
 	}
 	fname2 = tmpfile()
 	durationScaling := "1"
-	if effect == "reverberate" || effect == "tapestop" {
-		if mathr.Float64() < 0.5 {
-			durationScaling = "2"
-		} else {
-			durationScaling = "2.5"
-		}
-	}
+	// if effect == "reverberate" || effect == "tapestop" {
+	// 	if mathr.Float64() < 0.5 {
+	// 		durationScaling = "2"
+	// 	} else {
+	// 		durationScaling = "2.5"
+	// 	}
+	// }
 	scDoneFile := filepath.FromSlash(tmpfile())
 	scDoneFile = strings.Replace(scDoneFile, `\`, `\\`, -1)
 	defer os.Remove(scDoneFile)

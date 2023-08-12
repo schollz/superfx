@@ -12,7 +12,7 @@ func TestSuperCollider(t *testing.T) {
 	log.SetLevel("trace")
 	var fname2 string
 	var err error
-	fname2 = scPath("sample.wav")
+	fname2 = SCPath("sample.wav")
 	fname2, err = Effect(fname2, "tapedeck")
 	assert.Nil(t, err)
 	fname2, err = Effect(fname2, "lpf_rampup", 2, 0)

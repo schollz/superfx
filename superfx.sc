@@ -45,9 +45,9 @@ SynthDef("dec", {
 SynthDef("reverberate", {
     arg out=0,  dur=30, f1,f2,f3,f4;
     var duration=BufDur.ir(0);
-    var snd = PlayBuf.ar(2,0,BufRateScale.kr(0));
-    snd=SelectX.ar(XLine.kr(0,1,duration/4),[snd,Greyhole.ar(snd* EnvGen.ar(Env.new([0, 1, 1, 0], [0.1,dur-0.2,0.1]), doneAction:2))]);
-    snd = snd * EnvGen.ar(Env.new([0, 1, 1, 0], [0.1,dur-0.2,0.1]), doneAction:2);
+    var snd = PlayBuf.ar(2,0,BufRateScale.kr(0),doneAction:2);
+    snd=SelectX.ar(EnvGen.kr(Env.new([0,0,1],[duration/3,duration/3]),1),[snd,Fverb.ar(snd[0],snd[1])]);
+    // snd = snd * EnvGen.ar(Env.new([0, 1, 1, 0], [0.1,dur-0.2,0.1]), doneAction:2);
     Out.ar(out, LeakDC.ar(snd));
 }).load(nrtServer);
 SynthDef("filter_in_out", {
@@ -214,6 +214,7 @@ scoreFn={
     arg inFile,outFile,synthDefinition,durationScaling,scDoneFile,f1,f2,f3,f4;
     Buffer.read(mainServer,inFile,action:{
         arg buf;
+        buf.numChannels.postln;
         Routine {
             var buffer;
             var score;
